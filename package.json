@@ -1,0 +1,31 @@
+{
+  "name": "disbot",
+  "version": "1.0.0",
+  "description": "Bot discord",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonychaussin/DisBot.git"
+  },
+  "keywords": [
+    "Bot",
+    "Discord"
+  ],
+  "author": "Anthony Chaussin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anthonychaussin/DisBot/issues"
+  },
+  "homepage": "https://github.com/anthonychaussin/DisBot#readme",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.31.0"
+  }
+}
