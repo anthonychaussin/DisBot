@@ -1,59 +1,86 @@
+const {Client, GatewayIntentBits, REST, Routes, Collection, SlashCommandBuilder} = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
-const { token } = require('./config.json');
-const client = new Client({ intents: 
-	[
-		GatewayIntentBits.Guilds,
+require('dotenv').config()
+const client = new Client({intents: [
+        GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildMembers,
-	] });
-
-
-client.once(Events.ClientReady, () => {
-	console.log('DisBot is alive');
-});
-client.on(Events.Message, message => {
-	console.log('message');
-	if(message.content === "ping"){
-		console.log('ping');
-		message.channel.send("pong");
-	}
-});
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers,
+    ]});
 client.commands = new Collection();
-
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
+const commands = [];
+
 for (const file of commandFiles) {
-	const filePath = path.join(commandsPath, file);
-	const command = require(filePath);
-	// Set a new item in the Collection with the key as the command name and the value as the exported module
-	if ('data' in command && 'execute' in command) {
-		client.commands.set(command.data.name, command);
-	} else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-	}
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    commands.push(command.data.toJSON());
+    // Set a new item in the Collection with the key as the command name and the value as the exported module
+    if ('data' in command && 'execute' in command) {
+        client.commands.set(command.data.name, command);
+    } else {
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+    }
 }
 
-client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
+var collections = Object.keys(JSON.parse(fs.readFileSync(path.join(__dirname, "collection.json"), "utf8"))).sort();
+for (const c of collections) {
+    const command = {
+        data: new SlashCommandBuilder()
+            .setName(c)
+            .setDescription('Send a random ' + c + ' gif'),
+        async execute(interaction) {
+            var collectionsUrl = JSON.parse(fs.readFileSync(path.join( __dirname, "collection.json"), "utf8"))[c];
+            if(collectionsUrl.length > 0){
+                await interaction.reply({content: collectionsUrl[Math.floor(Math.random() * collectionsUrl.length)]});
+            } else {
+                await interaction.reply({content: 'Aucune image dans cette collection', ephemeral: true});
+            }
+        },
+    };
+    commands.push(command.data.toJSON());
+    // Set a new item in the Collection with the key as the command name and the value as the exported module
+    if ('data' in command && 'execute' in command) {
+        client.commands.set(command.data.name, command);
+    } else {
+        console.log(`[WARNING] The command ${c} is missing a required "data" or "execute" property.`);
+    }
+}
 
-	const command = interaction.client.commands.get(interaction.commandName);
+// Construct and prepare an instance of the REST module
+const rest = new REST({version: '10'}).setToken(process.env.TOKEN);
 
-	if (!command) {
-		console.error(`No command matching ${interaction.commandName} was found.`);
-		return;
-	}
+// and deploy your commands!
+(async () => {
+    try {
+        console.log(`Started refreshing ${commands.length} application (/) commands.`);
+        // The put method is used to fully refresh all commands in the guild with the current set
+        const data = await rest.put(
+            Routes.applicationCommands(process.env.CLIENT_ID),
+            {body: commands},
+        );
 
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
-});
+        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+    } catch (error) {
+        // And of course, make sure you catch and log any errors!
+        console.error(error);
+    }
+})();
 
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
-client.login(token);
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args));
+    }
+}
+
+client.login(process.env.TOKEN);
