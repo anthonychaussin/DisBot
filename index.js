@@ -33,11 +33,16 @@ for (const c of collections) {
             .setName(c)
             .setDescription('Send a random ' + c + ' gif'),
         async execute(interaction) {
-            var collectionsUrl = JSON.parse(fs.readFileSync(path.join( __dirname, "collection.json"), "utf8"))[c];
-            if(collectionsUrl.length > 0){
-                await interaction.reply({content: collectionsUrl[Math.floor(Math.random() * collectionsUrl.length)]});
+            var userRoles = interaction.member.roles.cache.map(r => {return {id: r.id, name: r.name}});
+            if(hasRoleName('Clef cachot', userRoles)){
+                var collectionsUrl = JSON.parse(fs.readFileSync(path.join( __dirname, "collection.json"), "utf8"))[c];
+                if(collectionsUrl.length > 0){
+                    await interaction.reply({content: collectionsUrl[Math.floor(Math.random() * collectionsUrl.length)]});
+                } else {
+                    await interaction.reply({content: 'Aucune image dans cette collection', ephemeral: true});
+                }
             } else {
-                await interaction.reply({content: 'Aucune image dans cette collection', ephemeral: true});
+                await interaction.reply({content: 'Non non', ephemeral: true});
             }
         },
     };
@@ -84,3 +89,7 @@ for (const file of eventFiles) {
 }
 
 client.login(process.env.TOKEN);
+
+function hasRoleName(roleName, roles){
+    return roles.map(r => r.name).includes(roleName);
+}
