@@ -88,6 +88,8 @@ for (const file of eventFiles) {
     }
 }
 
+console.log(eventFiles.length + ' events listened');
+
 client.login(process.env.TOKEN);
 
 function hasRoleName(roleName, roles){
