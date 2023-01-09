@@ -14,6 +14,12 @@ module.exports = {
                 newMember.roles.add(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
             }
         }
+        if(hasRoleName('Clef cachot', newRoles) &&
+            (!hasRoleName('Accès cachot', newRoles) ||
+            !hasRoleName('Pronom: Elle', newRoles) ||
+            hasRoleName('Soumis(e)', newRoles)) ){
+            newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
+        }
     },
 };
 
