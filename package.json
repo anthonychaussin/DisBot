@@ -24,7 +24,8 @@
   "dependencies": {
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
-    "keyv": "^4.5.2"
+    "keyv": "^4.5.2",
+    "pm2": "^5.2.2"
   },
   "devDependencies": {
     "eslint": "^8.31.0"
