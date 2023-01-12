@@ -25,7 +25,7 @@ module.exports = {
         } else if (hasRoleName('Clef cachot', newRoles) &&
             hasRoleName('Bailloné(e)', newRoles) &&
             !hasRoleName('Maîtresse', newRoles)) {
-            console.log(username + ' Baillonné(e) on retire les clés');
+            console.log(username + ' Baillonne on retire les clés');
             newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
         } else if (!hasRoleName('👑 Staff', newRoles) && isSub && hasRoleName('Clef cachot', newRoles)){
             console.log(username + ' sub qui triche on retir les cles');
