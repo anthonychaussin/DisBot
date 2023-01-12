@@ -13,14 +13,19 @@ module.exports = {
             hasRoleName('Accès cachot', newRoles) &&
             hasRoleName('Pronom: Elle', newRoles) &&
              !isSub &&
-            !hasRoleName('Prisonnier', newRoles) && !hasRoleName('Bailloné(e)', newRoles)) {
+            !hasRoleName('Prisonnier', newRoles) && 
+            !hasRoleName('Bailloné(e)', newRoles)) {
             console.log(username + ' pas sub on donne les cles');
             newMember.roles.add(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
-
         } else if (hasRoleName('Clef cachot', newRoles) &&
-            (hasRoleName('Prisonnier', newRoles)||hasRoleName('Bailloné(e)', newRoles)) &&
+            hasRoleName('Prisonnier', newRoles) &&
             !hasRoleName('Maîtresse', newRoles)) {
             console.log(username + ' Prisonnier on retire les clés');
+            newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
+        } else if (hasRoleName('Clef cachot', newRoles) &&
+            hasRoleName('Bailloné(e)', newRoles) &&
+            !hasRoleName('Maîtresse', newRoles)) {
+            console.log(username + ' Baillonné(e) on retire les clés');
             newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
         } else if (!hasRoleName('👑 Staff', newRoles) && isSub && hasRoleName('Clef cachot', newRoles)){
             console.log(username + ' sub qui triche on retir les cles');
