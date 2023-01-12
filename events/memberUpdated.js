@@ -15,7 +15,7 @@ module.exports = {
             hasRoleName('Pronom: Elle', newRoles) &&
              !isSub &&
             !hasRoleName('Prisonnier', newRoles) && 
-            !hasRoleName('Bâilloné(e)', newRoles)) {
+            !hasRoleName('Bâillonné(e)', newRoles)) {
             console.log(username + ' pas sub on donne les cles');
             newMember.roles.add(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
         } else if (hasRoleName('Clef cachot', newRoles) &&
@@ -24,7 +24,7 @@ module.exports = {
             console.log(username + ' Prisonnier on retire les clés');
             newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
         } else if (hasRoleName('Clef cachot', newRoles) &&
-            hasRoleName('Bâilloné(e)', newRoles) &&
+            hasRoleName('Bâillonné(e)', newRoles) &&
             !hasRoleName('Maîtresse', newRoles)) {
             console.log(username + ' Baillonne on retire les clés');
             newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
