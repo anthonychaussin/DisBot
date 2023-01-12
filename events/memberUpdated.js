@@ -8,6 +8,7 @@ module.exports = {
             return {id: r.id, name: r.name}
         });
         const username = newMember.user.username;
+        console.log(username + ' updated');
         const isSub = !(hasRoleName('Maîtresse', newRoles) || hasRoleName('Switch', newRoles) || hasRoleName('Switch à tendance Soumise', newRoles)|| hasRoleName('Switch à tendance Dominante', newRoles));
         if (!hasRoleName('Clef cachot', newRoles) &&
             hasRoleName('Accès cachot', newRoles) &&
