@@ -13,7 +13,7 @@ module.exports = {
             hasRoleName('Accès cachot', newRoles) &&
             hasRoleName('Pronom: Elle', newRoles) &&
              !isSub &&
-            !(hasRoleName('Prisonnier', newRoles)||hasRoleName('Bailloné(e)', newRoles))) {
+            !hasRoleName('Prisonnier', newRoles) && !hasRoleName('Bailloné(e)', newRoles)) {
             console.log(username + ' pas sub on donne les cles');
             newMember.roles.add(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
 
