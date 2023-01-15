@@ -48,14 +48,14 @@ module.exports = {
             const target = interaction.options.getUser('target');
             if (action === 'add') {
                 crons.push({
-                    cron: '0 ' + interaction.options.getInteger('minute') + ' ' + interaction.options.getInteger('heure')-1 + ' * * *',
+                    cron: '0 ' + interaction.options.getInteger('minute') + ' ' + (interaction.options.getInteger('heure')-1) + ' * * *',
                     action: 0,
                     author: author.username,
                     target: target,
                     guildId: interaction.guildId
                 })
                 crons.push({
-                    cron: '0 ' + interaction.options.getInteger('minute2') + ' ' + interaction.options.getInteger('heure2')-1 + ' * * *',
+                    cron: '0 ' + interaction.options.getInteger('minute2') + ' ' + (interaction.options.getInteger('heure2')-1) + ' * * *',
                     action: 1,
                     author: author.username,
                     target: target,
