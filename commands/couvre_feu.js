@@ -40,7 +40,6 @@ module.exports = {
                         .setRequired(true))),
     async execute(interaction) {
         const author = interaction.user;
-        console.info(interaction);
         if (hasRoleName('👑 Staff', interaction.member.roles.cache.map(r => {
             return {id: r.id, name: r.name}
         }))) {
