@@ -47,22 +47,26 @@ module.exports = {
             const action = interaction.options.getSubcommand();
             const target = interaction.options.getUser('target');
             if (action === 'add') {
+                let heure = (interaction.options.getInteger('heure')-1)%24;
+                heure = heure < 0 ? heure + 24 : heure;
+                let heure2 = (interaction.options.getInteger('heure2')-1)%24;
+                heure2 = heure2 < 0 ? heure2 + 24 : heure2;
                 crons.push({
-                    cron: '0 ' + interaction.options.getInteger('minute') + ' ' + (interaction.options.getInteger('heure')-1) + ' * * *',
+                    cron: '0 ' + interaction.options.getInteger('minute') + ' ' + heure + ' * * *',
                     action: 0,
                     author: author.username,
-                    target: target,
+                    target: target.id,
                     guildId: interaction.guildId
                 })
                 crons.push({
-                    cron: '0 ' + interaction.options.getInteger('minute2') + ' ' + (interaction.options.getInteger('heure2')-1) + ' * * *',
+                    cron: '0 ' + interaction.options.getInteger('minute2') + ' ' + heure2 + ' * * *',
                     action: 1,
                     author: author.username,
-                    target: target,
+                    target: target.id,
                     guildId: interaction.guildId
                 })
             } else {
-                crons.filter(c => c.author === author.username && c.target === target).forEach(c => crons.pop(c));
+                crons.filter(c => c.author === author.username && c.target === target.id).forEach(c => crons.pop(c));
             }
             fs.writeFileSync(path.join(__dirname, '..', "cron.json"), JSON.stringify(crons));
             await interaction.reply({

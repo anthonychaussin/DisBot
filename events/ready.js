@@ -14,7 +14,7 @@ module.exports = {
                     schedule.scheduleJob(crono.cron.toString(), async function () {
                         console.log('cachot job');
                         try {
-                            let user = await (await client.guilds.fetch(crono.guildId)).members.fetch(crono.target.id);
+                            let user = await (await client.guilds.fetch(crono.guildId)).members.fetch(crono.target);
                             user.roles.add(user.guild.roles.cache.find(r => r.name === 'Prisonnier')).catch(console.error);
                             console.info(user.username + ' au cachot');
                             await user.send(crono.author + ' t\'a envoyé(e) au cachot');
@@ -28,7 +28,7 @@ module.exports = {
             } else {
                 try {
                     schedule.scheduleJob(crono.cron.toString(), async function () {
-                        let user = await (await client.guilds.fetch(crono.guildId)).members.fetch(crono.target.id);
+                        let user = await (await client.guilds.fetch(crono.guildId)).members.fetch(crono.target);
                         user.roles.remove(user.guild.roles.cache.find(r => r.name === 'Prisonnier')).catch(console.error);
                         console.info(user.username + ' dehors');
                         await user.send(crono.author + ' t\'a libéré(e)');

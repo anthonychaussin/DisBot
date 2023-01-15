@@ -16,8 +16,8 @@ module.exports = {
              !isSub &&
             !hasRoleName('Prisonnier', newRoles) && 
             !hasRoleName('Bâillonné(e)', newRoles)) {
-            console.log(username + ' pas sub on donne les cles');
             newMember.roles.add(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
+            newMember.send('Hey ! Je t\'ai donné les clés du cachot, amuse toi bien ;)').then(() => console.log(username + ' pas sub on donne les cles'));
         } else if (hasRoleName('Clef cachot', newRoles) &&
             hasRoleName('Prisonnier', newRoles) &&
             !hasRoleName('Maîtresse', newRoles)) {
