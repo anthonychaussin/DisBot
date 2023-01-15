@@ -69,7 +69,9 @@ module.exports = {
                 content: 'Ok je m\'en souviendrais ! ',
                 ephemeral: true
             });
-            shell.exec('pm2 restart index');
+            setTimeout(() => {
+                shell.exec('pm2 restart index');
+            }, 3*1000);
         } else {
             await interaction.reply({
                 content: 'Nope, cette commande n\'est pas pour toi :P',
