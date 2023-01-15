@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const {Events} = require('discord.js');
 const fs = require("node:fs");
 const path = require("node:path");
 const schedule = require("node-schedule");
@@ -8,15 +8,15 @@ module.exports = {
     once: false,
     execute(client) {
         let crons = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "cron.json"), "utf8"));
-        /*crons.forEach(crono => {
-            if(crono.action === 1){
-                try{
-                    console.info(crono.target.id)
-                    console.info(client.users.cache.get(crono.target.id));
-                    schedule.scheduleJob(crono.cron.toString(), function() {
+        crons.forEach(crono => {
+            if (crono.action === 0) {
+                try {
+                    schedule.scheduleJob(crono.cron.toString(), async function () {
+                        console.log('cachot job');
                         try {
-                            let user = client.users.get(crono.target.id);
-                            user.roles.add(crono.target.guild.roles.cache.find(r => r.name === 'Prisonnier')).catch(console.error);
+                            let user = await (await client.guilds.fetch(crono.guildId)).members.fetch(crono.target.id);
+                            console.info(user);
+                            user.roles.add(user.guild.roles.cache.find(r => r.name === 'Prisonnier')).catch(console.error);
                             console.info(user.username + ' au cachot');
                         } catch (ex) {
                             console.info(ex);
@@ -27,15 +27,17 @@ module.exports = {
                 }
             } else {
                 try {
-                    schedule.scheduleJob(crono.cron.toString(), function() {
-                        crono.object.target.roles.remove(crono.target.guild.roles.cache.find(r => r.name === 'Prisonnier')).catch(console.error);
+                    schedule.scheduleJob(crono.cron.toString(), async function () {
+                        console.log('cachot action1');
+                        let user = await (await client.guilds.fetch(crono.guildId)).members.fetch(crono.target.id);
+                        user.roles.remove(user.guild.roles.cache.find(r => r.name === 'Prisonnier')).catch(console.error);
                         console.info(crono.target.username + ' dehors');
                     });
-                } catch (e){
+                } catch (e) {
                     console.info(e);
                 }
             }
-        });*/
+        });
         console.log(`Ready! Logged in as ${client.user.tag}`);
     },
 };

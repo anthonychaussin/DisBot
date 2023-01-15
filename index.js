@@ -47,7 +47,7 @@ for (const c of collections) {
                     await interaction.reply({content: 'Aucune image dans cette collection', ephemeral: true});
                 }
             } else {
-                await interaction.reply({content: 'Non non', ephemeral: true});
+                await interaction.reply({content: 'Reste à ta place\nhttps://s3.gifyu.com/images/ezgif-1-7cfd0fae35.gif', ephemeral: true});
             }
         },
     };
@@ -80,32 +80,7 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
-let crons = JSON.parse(fs.readFileSync(path.join(__dirname, "cron.json"), "utf8"));
-crons.forEach(crono => {
-    if(crono.action === 1){
-        try{
-            schedule.scheduleJob(crono.cron.toString(), function() {
-                try {
-                    crono.target.roles.add(crono.target.guild.roles.cache.find(r => r.name === 'Prisonnier')).catch(console.error);
-                    console.info(crono.target.username + ' au cachot');
-                } catch (ex) {
-                    console.info(ex);
-                }
-            });
-        } catch (e) {
-            console.info(e);
-        }
-    } else {
-        try {
-            schedule.scheduleJob(crono.cron.toString(), function() {
-                crono.object.target.roles.remove(crono.target.guild.roles.cache.find(r => r.name === 'Prisonnier')).catch(console.error);
-                console.info(crono.target.username + ' dehors');
-            });
-        } catch (e){
-            console.info(e);
-        }
-    }
-});
+
 console.log(eventFiles.length + ' events listened');
 client.login(process.env.TOKEN);
 function hasRoleName(roleName, roles){

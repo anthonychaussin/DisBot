@@ -40,13 +40,28 @@ module.exports = {
                         .setRequired(true))),
     async execute(interaction) {
         const author = interaction.user;
-        if(hasRoleName('👑 Staff', interaction.member.roles.cache.map(r => {return {id: r.id, name: r.name}}))){
+        console.info(interaction);
+        if (hasRoleName('👑 Staff', interaction.member.roles.cache.map(r => {
+            return {id: r.id, name: r.name}
+        }))) {
             let crons = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "cron.json"), "utf8"));
             const action = interaction.options.getSubcommand();
             const target = interaction.options.getUser('target');
-            if(action === 'add'){
-                crons.push({cron: '0 ' + interaction.options.getInteger('minute')+' '+interaction.options.getInteger('heure')+' * * *', action:0, author:author.username, target:target})
-                crons.push({cron:'0 ' + interaction.options.getInteger('minute2')+' '+interaction.options.getInteger('heure2')+' * * *', action:1, author:author.username, target:target})
+            if (action === 'add') {
+                crons.push({
+                    cron: '0 ' + interaction.options.getInteger('minute') + ' ' + interaction.options.getInteger('heure') + ' * * *',
+                    action: 0,
+                    author: author.username,
+                    target: target,
+                    guildId: interaction.guildId
+                })
+                crons.push({
+                    cron: '0 ' + interaction.options.getInteger('minute2') + ' ' + interaction.options.getInteger('heure2') + ' * * *',
+                    action: 1,
+                    author: author.username,
+                    target: target,
+                    guildId: interaction.guildId
+                })
             } else {
                 crons.filter(c => c.author === author.username && c.target === target).forEach(c => crons.pop(c));
             }
