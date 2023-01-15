@@ -10,7 +10,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('gif')
         .setDescription('Controlez vos collections de gif')
-        .setDefaultMemberPermissions(0)
         .addSubcommand((subCommand) =>
             subCommand.setName('add')
                 .setDescription('Ajoute un gif à une collection')
@@ -36,23 +35,37 @@ module.exports = {
                         .setDescription('Url du gif')
                         .setRequired(true))),
     async execute(interaction) {
-        var collectionsUrl = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "collection.json"), "utf8"));
-        const collection = interaction.options.getString('collection');
-        const url = interaction.options.getString('url');
-        const action = interaction.options.getSubcommand();
-        if (action === 'add') {
-            if (collectionsUrl[collection].filter(k => k === url).length === 0) {
-                collectionsUrl[collection].push(url);
+
+        const author = interaction.user;
+        if(hasRoleName('👑 Staff', interaction.member.roles.cache.map(r => {return {id: r.id, name: r.name}}))) {
+            var collectionsUrl = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "collection.json"), "utf8"));
+            const collection = interaction.options.getString('collection');
+            const url = interaction.options.getString('url');
+            const action = interaction.options.getSubcommand();
+            if (action === 'add') {
+                if (collectionsUrl[collection].filter(k => k === url).length === 0) {
+                    collectionsUrl[collection].push(url);
+                }
+            } else {
+                if (collectionsUrl[collection].filter(k => k === url).length > 0) {
+                    collectionsUrl[collection].pop(url);
+                }
             }
-        } else {
-            if (collectionsUrl[collection].filter(k => k === url).length > 0) {
-                collectionsUrl[collection].pop(url);
-            }
+            fs.writeFileSync(path.join(__dirname, '..', "collection.json"), JSON.stringify(collectionsUrl));
+            await interaction.reply({
+                content: (action === 'add' ? 'Ajout' : 'Suppression') + ' à la collection ' + collection + ' faite !',
+                ephemeral: true
+            });
+        }else {
+            await interaction.reply({
+                content: 'https://s3.gifyu.com/images/ezgif-1-7cfd0fae35.gif',
+                ephemeral: true
+            });
         }
-        fs.writeFileSync(path.join(__dirname, '..', "collection.json"), JSON.stringify(collectionsUrl));
-        await interaction.reply({
-            content: (action === 'add' ? 'Ajout' : 'Suppression') + ' à la collection ' + collection + ' faite !',
-            ephemeral: true
-        });
     },
 };
+
+
+function hasRoleName(roleName, roles) {
+    return roles.map(r => r.name).includes(roleName);
+}

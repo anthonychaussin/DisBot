@@ -1,4 +1,5 @@
 const {SlashCommandBuilder} = require('discord.js');
+const shell = require('shelljs');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -6,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('couvre-feu')
         .setDescription('Couvre feu a un user')
+        .setDefaultMemberPermissions(0)
         .addSubcommand((subCommand) =>
             subCommand.setName('add')
                 .setDescription('Ajoute un couvre feu à un user')
@@ -37,19 +39,33 @@ module.exports = {
                         .setDescription('Soumis(e) à mettre en cage')
                         .setRequired(true))),
     async execute(interaction) {
-        var cron = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "cron.json"), "utf8"));
-        const action = interaction.options.getSubcommand();
-        const target = interaction.options.getUser('target').id;
-        if(action === 'add'){
-            cron.push({cron:'0 0 0 * * *', action:0, author:interaction.user.username, target:target})
-            cron.push({cron:'0 10 0 * * *', action:1, author:interaction.user.username, target:target})
+        const author = interaction.user;
+        if(hasRoleName('👑 Staff', interaction.member.roles.cache.map(r => {return {id: r.id, name: r.name}}))){
+            let crons = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "cron.json"), "utf8"));
+            const action = interaction.options.getSubcommand();
+            const target = interaction.options.getUser('target');
+            if(action === 'add'){
+                crons.push({cron: '0 ' + interaction.options.getInteger('minute')+' '+interaction.options.getInteger('heure')+' * * *', action:0, author:author.username, target:target})
+                crons.push({cron:'0 ' + interaction.options.getInteger('minute2')+' '+interaction.options.getInteger('heure2')+' * * *', action:1, author:author.username, target:target})
+            } else {
+                crons.filter(c => c.author === author.username && c.target === target).forEach(c => crons.pop(c));
+            }
+            fs.writeFileSync(path.join(__dirname, '..', "cron.json"), JSON.stringify(crons));
+            await interaction.reply({
+                content: 'Ok je m\'en souviendrais ! ',
+                ephemeral: true
+            });
+            shell.exec('pm2 restart index');
         } else {
-            cron.filter(c => c.author === interaction.user.username && c.target === target).forEach(c => cron.pop(c));
+            await interaction.reply({
+                content: 'Nope, cette commande n\'est pas pour toi :P',
+                ephemeral: true
+            });
         }
-        fs.writeFileSync(path.join(__dirname, '..', "cron.json"), JSON.stringify(cron));
-        await interaction.reply({
-            content: 'C\'est pas encore prèt, mais ça arrive',
-            ephemeral: true
-        });
     },
 };
+
+
+function hasRoleName(roleName, roles) {
+    return roles.map(r => r.name).includes(roleName);
+}
