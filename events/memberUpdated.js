@@ -26,33 +26,45 @@ module.exports = {
                 if(!firstTime.includes(newMember.id)){
                     const exampleEmbed = new EmbedBuilder()
                         .setColor(0x0099FF)
-                        .setTitle('       💀 ༻ Le cachot ༺ 💀')
-                        .setDescription('Le cachot est un salon caché permettant d\'emprisonner les soumis(e)s qui méritent une correction.\n' +
+                        .setTitle('**>>🗝️ VOUS VENEZ DE GAGNER LA CLEF DU CACHOT !!🗝️<<**')
+                        .setDescription('**1 • Accès aux commandes d\'enfermement et du bâillon**\n' +
                             '\n' +
-                            'Pour pouvoir emprisonner (et voir le salon) vous devez avoir le rôle: @Clef cachot Pour le gagner vous devez être une maitresse (switch inclus) et être au niveau 10.\n' +
+                            'Grace à ce rôle vous pouvez maintenant enfermer et bâillonner vos soumis(e)s dans le salon cachot de Girls Paradise. \n' +
                             '\n' +
-                            'Une fois une personne enfermée, elle ne pourra alors voir que ce seul et unique salon dans tout le serveur. Les commandes sont simples :\n' +
+                            'Une fois une personne enfermée, elle ne pourra alors voir et écrire que dans ce salon. Les commandes sont simples :\n' +
                             '\n' +
-                            '•⠀&cachot @username⠀➛ Pour enfermer quelqu\'un\n' +
+                            '`&cachot @username`⠀➛ Pour enfermer quelqu\'un\n' +
                             '\n' +
-                            '•⠀&cachotdel @username⠀➛ Pour libérer la personne\n' +
+                            '`&cachotdel @username`⠀➛ Pour la libérer\n' +
                             '\n' +
-                            'Si vous êtes très sadique, vous pouvez aussi bâillonner vos prisonniers pour qu\'ils ne puissent plus écrire dans le cachot, voici les commands :\n' +
+                            'Vous pouvez aussi bâillonner vos prisonniers pour qu\'ils ne puissent plus écrire dans le salon cachot. Voici donc les commandes :\n' +
                             '\n' +
-                            '•⠀&mute @username ➛ Pour mettre un bâillon à votre prisonnier\n' +
+                            '`&mute @username` ➛ Pour bâillonner votre prisonnier\n' +
                             '\n' +
-                            '•⠀&mutedel @username ➛ Pour retirer son bâillon\n' +
+                            '`&mutedel @username` ➛ Pour lui retirer son bâillon\n' +
                             '\n' +
                             '⚠️ Merci de ne pas essayer d\'enfermer une personne du staff.\n' +
                             'Le bâillon fonctionne uniquement sur un prisonnier déjà enfermé.\n' +
                             '\n' +
-                            'La @Clef cachot vous donne aussi le droit d\'utiliser le bot: @Mel\'s Succubus qui permet d\'envoyer mais aussi d\'ajouter vos propres gifs/images liés au bdsm selon des thèmes définis.\n' +
+                            '**2 • Accès aux commandes bot de Mel\'s Succubus**\n' +
                             '\n' +
-                            'Toutes les commands du bot se font avec les commandes slash, pour ajouter/enlever des medias :\n' +
+                            'La clef du cachot vous donne aussi le droit d\'utiliser un bot pour envoyer et ajouter vos propres médias en rapport au BDSM.\n' +
                             '\n' +
-                            '•⠀/gif add ➛ Pour ajouter des gifs/images dans une collection\n' +
+                            '`/gif add` ➛ Ajoute un média dans une  collection grâce à son URL\n' +
                             '\n' +
-                            '•⠀/gif del ➛ Pour enlever des gifs/images en définissant son lien')
+                            '`/gif del` ➛ Enlève un média d\'une collection grâce son URL\n' +
+                            '\n' +
+                            '⚠️ Veuillez respecter les thèmes des collections, les médias qui seront hors thème seront supprimés.\n' +
+                            '\n' +
+                            'Pour envoyer vos médias avec le bot suffit de taper:\n' +
+                            '\n' +
+                            '•⠀`/<le nom d\'une collection>` \n' +
+                            '\n' +
+                            'Voici la liste  (non exhaustive) des collections : \n' +
+                            '\n' +
+                            '> kneel, slap, spit, stomp, whip, ballbusting, collar, pee, feet, bondage\n' +
+                            '\n' +
+                            'Donc un exemple à taper: `/kneel` ou `/slap` etc.')
                         .setImage('https://i.imgur.com/90mPyON.png');
                     newMember.send({content:'Hey ! Je t\'ai donné les clés du cachot, amuse toi bien ;)', embeds: [exampleEmbed]}).then(() => console.log('message sended to ' + username));
                     firstTime.push(newMember.id);
