@@ -65,7 +65,7 @@ module.exports = {
                             '> kneel, slap, spit, stomp, whip, ballbusting, collar, pee, feet, bondage\n' +
                             '\n' +
                             'Donc un exemple à taper: `/kneel` ou `/slap` etc.')
-                        .setImage('https://i.imgur.com/90mPyON.png');
+                        .setImage('https://i.imgur.com/OOvYndn.png');
                     newMember.send({content:'Hey ! Je t\'ai donné les clés du cachot, amuse toi bien ;)', embeds: [exampleEmbed]}).then(() => console.log('message sended to ' + username));
                     firstTime.push(newMember.id);
                     fs.writeFileSync(path.join(__dirname, '..', "firstTime.json"), JSON.stringify(firstTime));
