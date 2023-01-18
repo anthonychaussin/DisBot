@@ -22,7 +22,7 @@ module.exports = {
                 !hasRoleName('Prisonnier', newRoles) &&
                 !hasRoleName('Bâillonné(e)', newRoles)) {
                 newMember.roles.add(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
-                newMember.send('Hey ! Je t\'ai donné les clés du cachot, amuse toi bien ;)').then(() => console.log(username + ' pas sub on donne les cles'));
+                console.log(username + ' pas sub on donne les cles');
                 if(!firstTime.includes(newMember.id)){
                     const exampleEmbed = new EmbedBuilder()
                         .setColor(0x0099FF)
