@@ -3,8 +3,8 @@ const fs = require("node:fs");
 const path = require("node:path");
 const schedule = require("node-schedule");
 
-const MEMBRE = 1014988483711991858;
-const PROSONNIER = 1015597946013757512;
+const MEMBRE = '1014988483711991858';
+const PROSONNIER = '1015597946013757512';
 
 module.exports = {
     name: Events.ClientReady,

@@ -2,20 +2,20 @@ const {Events, EmbedBuilder} = require('discord.js');
 const fs = require("node:fs");
 const path = require("node:path");
 
-const MAITRESSE = 1014994535719370784;
-const SWITCHDOM = 1057051377764933702;
-const SWITCH = 1014994578358669332;
-const SWITCHSUB = 1057051369674121237;
+const MAITRESSE = '1014994535719370784';
+const SWITCHDOM = '1057051377764933702';
+const SWITCH = '1014994578358669332';
+const SWITCHSUB = '1057051369674121237';
 
-const ACCESCACHOT = 1027288179105087549;
-const CLEFCACHOT = 1015648044919836752;
+const ACCESCACHOT = '1027288179105087549';
+const CLEFCACHOT = '1015648044919836752';
 
-const PROSONNIER = 1015597946013757512;
-const BAILLON = 1042206237913255986;
+const PROSONNIER = '1015597946013757512';
+const BAILLON = '1042206237913255986';
 
-const ELLE = 1014992295357059202;
+const ELLE = '1014992295357059202';
 
-const STAFF = 1015242521695223958;
+const STAFF = '1015242521695223958';
 
 module.exports = {
     name: Events.GuildMemberUpdate,
@@ -104,5 +104,5 @@ module.exports = {
     },
 };
 function hasRoleId(id, roles){
-    return roles.map(r => r.id).includes(id);
+    return roles.map(r => r.id.toString()).includes(id.toString());
 }

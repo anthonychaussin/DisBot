@@ -19,7 +19,7 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 
 const rest = new REST({version: '10'}).setToken(process.env.TOKEN);
 
-const CLEFCACHOT = 1015648044919836752;
+const CLEFCACHOT = '1015648044919836752';
 
 let collections = Object.keys(JSON.parse(fs.readFileSync(path.join(__dirname, "collection.json"), "utf8"))).sort();
 
@@ -86,5 +86,5 @@ for (const file of eventFiles) {
 console.log(eventFiles.length + ' events listened');
 client.login(process.env.TOKEN);
 function hasRoleId(id, roles){
-    return roles.map(r => r.id).includes(id);
+    return roles.map(r => r.id.toString()).includes(id.toString());
 }

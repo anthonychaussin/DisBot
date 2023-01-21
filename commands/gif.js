@@ -5,7 +5,7 @@ const path = require('node:path');
 const collections = Object.keys(JSON.parse(fs.readFileSync(path.join(__dirname, '..', "collection.json"), "utf8")))
 .sort((e) => e.name).map(e => {return { name: e, value: e}});
 
-const STAFF = 1015242521695223958;
+const STAFF = '1015242521695223958';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -68,5 +68,5 @@ module.exports = {
 
 
 function hasRoleId(id, roles) {
-    return roles.map(r => r.id).includes(id);
+    return roles.map(r => r.id.toString()).includes(id.toString());
 }

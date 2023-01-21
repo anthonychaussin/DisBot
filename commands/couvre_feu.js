@@ -3,7 +3,7 @@ const shell = require('shelljs');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const STAFF = 1015242521695223958;
+const STAFF = '1015242521695223958';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -89,5 +89,5 @@ module.exports = {
 
 
 function hasRoleId(id, roles) {
-    return roles.map(r => r.id).includes(id);
+    return roles.map(r => r.id.toString()).includes(id.toString());
 }
