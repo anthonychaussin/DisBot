@@ -37,7 +37,7 @@ module.exports = {
                 !hasRoleId(PROSONNIER, newRoles) &&
                 !hasRoleId(BAILLON, newRoles)) {
                 newMember.roles.add(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
-                newMember.send('Hey ! Je t\'ai donné les clés du cachot, amuse toi bien ;)').then(() => console.log(username + ' pas sub on donne les cles'));
+                console.log(username + ' pas sub on donne les cles');
                 if(!firstTime.includes(newMember.id)){
                     const exampleEmbed = new EmbedBuilder()
                         .setColor(0x0099FF)
