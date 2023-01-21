@@ -2,6 +2,21 @@ const {Events, EmbedBuilder} = require('discord.js');
 const fs = require("node:fs");
 const path = require("node:path");
 
+const MAITRESSE = 1014994535719370784;
+const SWITCHDOM = 1057051377764933702;
+const SWITCH = 1014994578358669332;
+const SWITCHSUB = 1057051369674121237;
+
+const ACCESCACHOT = 1027288179105087549;
+const CLEFCACHOT = 1015648044919836752;
+
+const PROSONNIER = 1015597946013757512;
+const BAILLON = 1042206237913255986;
+
+const ELLE = 1014992295357059202;
+
+const STAFF = 1015242521695223958;
+
 module.exports = {
     name: Events.GuildMemberUpdate,
     once: false,
@@ -14,14 +29,14 @@ module.exports = {
             });
             const username = newMember.user.username;
             console.log(username + ' updated');
-            const isSub = !(hasRoleName('Maîtresse', newRoles) || hasRoleName('Switch', newRoles) || hasRoleName('Switch à tendance Soumise', newRoles)|| hasRoleName('Switch à tendance Dominante', newRoles));
-            if (!hasRoleName('Clef cachot', newRoles) &&
-                hasRoleName('Accès cachot', newRoles) &&
-                hasRoleName('Pronom: Elle', newRoles) &&
+            const isSub = !(hasRoleId(MAITRESSE, newRoles) || hasRoleId(SWITCH, newRoles) || hasRoleId(SWITCHDOM, newRoles)|| hasRoleId(SWITCHSUB, newRoles));
+            if (!hasRoleId(CLEFCACHOT, newRoles) &&
+                hasRoleId(ACCESCACHOT, newRoles) &&
+                hasRoleId(ELLE, newRoles) &&
                 !isSub &&
-                !hasRoleName('Prisonnier', newRoles) &&
-                !hasRoleName('Bâillonné(e)', newRoles)) {
-                newMember.roles.add(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
+                !hasRoleId(PROSONNIER, newRoles) &&
+                !hasRoleId(BAILLON, newRoles)) {
+                newMember.roles.add(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
                 newMember.send('Hey ! Je t\'ai donné les clés du cachot, amuse toi bien ;)').then(() => console.log(username + ' pas sub on donne les cles'));
                 if(!firstTime.includes(newMember.id)){
                     const exampleEmbed = new EmbedBuilder()
@@ -71,24 +86,23 @@ module.exports = {
                     fs.writeFileSync(path.join(__dirname, '..', "firstTime.json"), JSON.stringify(firstTime));
                 }
 
-            } else if (hasRoleName('Clef cachot', newRoles) &&
-                hasRoleName('Prisonnier', newRoles) &&
-                !hasRoleName('Maîtresse', newRoles)) {
+            } else if (hasRoleId(CLEFCACHOT, newRoles) &&
+                hasRoleId(PROSONNIER, newRoles) &&
+                !hasRoleId(MAITRESSE, newRoles)) {
                 console.log(username + ' Prisonnier on retire les clés');
-                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
-            } else if (hasRoleName('Clef cachot', newRoles) &&
-                hasRoleName('Bâillonné(e)', newRoles) &&
-                !hasRoleName('Maîtresse', newRoles)) {
+                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
+            } else if (hasRoleId(CLEFCACHOT, newRoles) &&
+                hasRoleId(BAILLON, newRoles) &&
+                !hasRoleId(MAITRESSE, newRoles)) {
                 console.log(username + ' Baillonne on retire les clés');
-                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
-            } else if (!hasRoleName('👑 Staff', newRoles) && isSub && hasRoleName('Clef cachot', newRoles)){
+                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
+            } else if (!hasRoleId(STAFF, newRoles) && isSub && hasRoleId(CLEFCACHOT, newRoles)){
                 console.log(username + ' sub qui triche on retir les cles');
-                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.name === 'Clef cachot')).catch(console.error);
+                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
             }
         }
     },
 };
-
-function hasRoleName(roleName, roles) {
-    return roles.map(r => r.name).includes(roleName);
+function hasRoleId(id, roles){
+    return roles.map(r => r.id).includes(id);
 }

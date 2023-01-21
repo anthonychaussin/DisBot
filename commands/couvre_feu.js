@@ -3,6 +3,8 @@ const shell = require('shelljs');
 const fs = require('node:fs');
 const path = require('node:path');
 
+const STAFF = 1015242521695223958;
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('couvre-feu')
@@ -40,7 +42,7 @@ module.exports = {
                         .setRequired(true))),
     async execute(interaction) {
         const author = interaction.user;
-        if (hasRoleName('👑 Staff', interaction.member.roles.cache.map(r => {
+        if (hasRoleId(STAFF, interaction.member.roles.cache.map(r => {
             return {id: r.id, name: r.name}
         }))) {
             let crons = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "cron.json"), "utf8"));
@@ -86,6 +88,6 @@ module.exports = {
 };
 
 
-function hasRoleName(roleName, roles) {
-    return roles.map(r => r.name).includes(roleName);
+function hasRoleId(id, roles) {
+    return roles.map(r => r.id).includes(id);
 }

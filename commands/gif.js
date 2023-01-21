@@ -5,6 +5,7 @@ const path = require('node:path');
 const collections = Object.keys(JSON.parse(fs.readFileSync(path.join(__dirname, '..', "collection.json"), "utf8")))
 .sort((e) => e.name).map(e => {return { name: e, value: e}});
 
+const STAFF = 1015242521695223958;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -37,8 +38,8 @@ module.exports = {
     async execute(interaction) {
 
         const author = interaction.user;
-        if(hasRoleName('👑 Staff', interaction.member.roles.cache.map(r => {return {id: r.id, name: r.name}}))) {
-            var collectionsUrl = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "collection.json"), "utf8"));
+        if(hasRoleId(STAFF, interaction.member.roles.cache.map(r => {return {id: r.id, name: r.name}}))) {
+            let collectionsUrl = JSON.parse(fs.readFileSync(path.join(__dirname, '..', "collection.json"), "utf8"));
             const collection = interaction.options.getString('collection');
             const url = interaction.options.getString('url');
             const action = interaction.options.getSubcommand();
@@ -48,7 +49,7 @@ module.exports = {
                 }
             } else {
                 if (collectionsUrl[collection].filter(k => k === url).length > 0) {
-                    collectionsUrl[collection].pop(url);
+                    collectionsUrl[collection].remove(url);
                 }
             }
             fs.writeFileSync(path.join(__dirname, '..', "collection.json"), JSON.stringify(collectionsUrl));
@@ -66,6 +67,6 @@ module.exports = {
 };
 
 
-function hasRoleName(roleName, roles) {
-    return roles.map(r => r.name).includes(roleName);
+function hasRoleId(id, roles) {
+    return roles.map(r => r.id).includes(id);
 }

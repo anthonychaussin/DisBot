@@ -19,7 +19,9 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 
 const rest = new REST({version: '10'}).setToken(process.env.TOKEN);
 
-var collections = Object.keys(JSON.parse(fs.readFileSync(path.join(__dirname, "collection.json"), "utf8"))).sort();
+const CLEFCACHOT = 1015648044919836752;
+
+let collections = Object.keys(JSON.parse(fs.readFileSync(path.join(__dirname, "collection.json"), "utf8"))).sort();
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
@@ -39,7 +41,7 @@ for (const c of collections) {
             .setName(c)
             .setDescription('Send a random ' + c + ' gif'),
         async execute(interaction) {
-            if(hasRoleName('Clef cachot', interaction.member.roles.cache.map(r => {return {id: r.id, name: r.name}}))){
+            if(hasRoleId(CLEFCACHOT, interaction.member.roles.cache.map(r => {return {id: r.id, name: r.name}}))){
                 const collectionsUrl = JSON.parse(fs.readFileSync(path.join( __dirname, "collection.json"), "utf8"))[c];
                 if(collectionsUrl.length > 0){
                     await interaction.reply({content: collectionsUrl[Math.floor(Math.random() * collectionsUrl.length)]});
@@ -83,6 +85,6 @@ for (const file of eventFiles) {
 
 console.log(eventFiles.length + ' events listened');
 client.login(process.env.TOKEN);
-function hasRoleName(roleName, roles){
-    return roles.map(r => r.name).includes(roleName);
+function hasRoleId(id, roles){
+    return roles.map(r => r.id).includes(id);
 }
