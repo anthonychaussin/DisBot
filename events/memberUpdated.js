@@ -38,75 +38,77 @@ module.exports = {
             else if(newMember.user.id == '744505000226717716' && !hasRoleId(PROSONNIER, newRoles)) {
                 newMember.roles.add(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMOIN)).catch(console.error);
             }
-            if (!hasRoleId(CLEFCACHOT, newRoles) &&
-                hasRoleId(ACCESCACHOT, newRoles) &&
-                hasRoleId(ELLE, newRoles) &&
-                !isSub &&
-                !hasRoleId(PROSONNIER, newRoles) &&
-                !hasRoleId(BAILLON, newRoles)) {
-                newMember.roles.add(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
-                console.log(username + ' pas sub on donne les cles');
-                if(!firstTime.includes(newMember.id)){
-                    const exampleEmbed = new EmbedBuilder()
-                        .setColor(0x0099FF)
-                        .setTitle('**>>🗝️ VOUS VENEZ DE GAGNER LA CLEF DU CACHOT !!🗝️<<**')
-                        .setDescription('**1 • Accès aux commandes d\'enfermement et du bâillon**\n' +
-                            '\n' +
-                            'Grace à ce rôle vous pouvez maintenant enfermer et bâillonner vos soumis(e)s dans le salon cachot de Girls Paradise. \n' +
-                            '\n' +
-                            'Une fois une personne enfermée, elle ne pourra alors voir et écrire que dans ce salon. Les commandes sont simples :\n' +
-                            '\n' +
-                            '`&cachot @username`⠀➛ Pour enfermer quelqu\'un\n' +
-                            '\n' +
-                            '`&cachotdel @username`⠀➛ Pour la libérer\n' +
-                            '\n' +
-                            'Vous pouvez aussi bâillonner vos prisonniers pour qu\'ils ne puissent plus écrire dans le salon cachot. Voici donc les commandes :\n' +
-                            '\n' +
-                            '`&mute @username` ➛ Pour bâillonner votre prisonnier\n' +
-                            '\n' +
-                            '`&mutedel @username` ➛ Pour lui retirer son bâillon\n' +
-                            '\n' +
-                            '⚠️ Merci de ne pas essayer d\'enfermer une personne du staff.\n' +
-                            'Le bâillon fonctionne uniquement sur un prisonnier déjà enfermé.\n' +
-                            '\n' +
-                            '**2 • Accès aux commandes bot de Mel\'s Succubus**\n' +
-                            '\n' +
-                            'La clef du cachot vous donne aussi le droit d\'utiliser un bot pour envoyer et ajouter vos propres médias en rapport au BDSM.\n' +
-                            '\n' +
-                            '`/gif add` ➛ Ajoute un média dans une  collection grâce à son URL\n' +
-                            '\n' +
-                            '`/gif del` ➛ Enlève un média d\'une collection grâce son URL\n' +
-                            '\n' +
-                            '⚠️ Veuillez respecter les thèmes des collections, les médias qui seront hors thème seront supprimés.\n' +
-                            '\n' +
-                            'Pour envoyer vos médias avec le bot suffit de taper:\n' +
-                            '\n' +
-                            '•⠀`/<le nom d\'une collection>` \n' +
-                            '\n' +
-                            'Voici la liste  (non exhaustive) des collections : \n' +
-                            '\n' +
-                            '> kneel, slap, spit, stomp, whip, ballbusting, collar, pee, feet, bondage\n' +
-                            '\n' +
-                            'Donc un exemple à taper: `/kneel` ou `/slap` etc.')
-                        .setImage('https://i.imgur.com/OOvYndn.png');
-                    newMember.send({content:'Hey ! Je t\'ai donné les clés du cachot, amuse toi bien ;)', embeds: [exampleEmbed]}).then(() => console.log('message sended to ' + username));
-                    firstTime.push(newMember.id);
-                    fs.writeFileSync(path.join(__dirname, '..', "firstTime.json"), JSON.stringify(firstTime));
-                }
+            else{
+                if (!hasRoleId(CLEFCACHOT, newRoles) &&
+                    hasRoleId(ACCESCACHOT, newRoles) &&
+                    hasRoleId(ELLE, newRoles) &&
+                    !isSub &&
+                    !hasRoleId(PROSONNIER, newRoles) &&
+                    !hasRoleId(BAILLON, newRoles)) {
+                    newMember.roles.add(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
+                    console.log(username + ' pas sub on donne les cles');
+                    if(!firstTime.includes(newMember.id)){
+                        const exampleEmbed = new EmbedBuilder()
+                            .setColor(0x0099FF)
+                            .setTitle('**>>🗝️ VOUS VENEZ DE GAGNER LA CLEF DU CACHOT !!🗝️<<**')
+                            .setDescription('**1 • Accès aux commandes d\'enfermement et du bâillon**\n' +
+                                '\n' +
+                                'Grace à ce rôle vous pouvez maintenant enfermer et bâillonner vos soumis(e)s dans le salon cachot de Girls Paradise. \n' +
+                                '\n' +
+                                'Une fois une personne enfermée, elle ne pourra alors voir et écrire que dans ce salon. Les commandes sont simples :\n' +
+                                '\n' +
+                                '`&cachot @username`⠀➛ Pour enfermer quelqu\'un\n' +
+                                '\n' +
+                                '`&cachotdel @username`⠀➛ Pour la libérer\n' +
+                                '\n' +
+                                'Vous pouvez aussi bâillonner vos prisonniers pour qu\'ils ne puissent plus écrire dans le salon cachot. Voici donc les commandes :\n' +
+                                '\n' +
+                                '`&mute @username` ➛ Pour bâillonner votre prisonnier\n' +
+                                '\n' +
+                                '`&mutedel @username` ➛ Pour lui retirer son bâillon\n' +
+                                '\n' +
+                                '⚠️ Merci de ne pas essayer d\'enfermer une personne du staff.\n' +
+                                'Le bâillon fonctionne uniquement sur un prisonnier déjà enfermé.\n' +
+                                '\n' +
+                                '**2 • Accès aux commandes bot de Mel\'s Succubus**\n' +
+                                '\n' +
+                                'La clef du cachot vous donne aussi le droit d\'utiliser un bot pour envoyer et ajouter vos propres médias en rapport au BDSM.\n' +
+                                '\n' +
+                                '`/gif add` ➛ Ajoute un média dans une  collection grâce à son URL\n' +
+                                '\n' +
+                                '`/gif del` ➛ Enlève un média d\'une collection grâce son URL\n' +
+                                '\n' +
+                                '⚠️ Veuillez respecter les thèmes des collections, les médias qui seront hors thème seront supprimés.\n' +
+                                '\n' +
+                                'Pour envoyer vos médias avec le bot suffit de taper:\n' +
+                                '\n' +
+                                '•⠀`/<le nom d\'une collection>` \n' +
+                                '\n' +
+                                'Voici la liste  (non exhaustive) des collections : \n' +
+                                '\n' +
+                                '> kneel, slap, spit, stomp, whip, ballbusting, collar, pee, feet, bondage\n' +
+                                '\n' +
+                                'Donc un exemple à taper: `/kneel` ou `/slap` etc.')
+                            .setImage('https://i.imgur.com/OOvYndn.png');
+                        newMember.send({content:'Hey ! Je t\'ai donné les clés du cachot, amuse toi bien ;)', embeds: [exampleEmbed]}).then(() => console.log('message sended to ' + username));
+                        firstTime.push(newMember.id);
+                        fs.writeFileSync(path.join(__dirname, '..', "firstTime.json"), JSON.stringify(firstTime));
+                    }
 
-            } else if (hasRoleId(CLEFCACHOT, newRoles) &&
-                hasRoleId(PROSONNIER, newRoles) &&
-                !hasRoleId(MAITRESSE, newRoles)) {
-                console.log(username + ' Prisonnier on retire les clés');
-                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
-            } else if (hasRoleId(CLEFCACHOT, newRoles) &&
-                hasRoleId(BAILLON, newRoles) &&
-                !hasRoleId(MAITRESSE, newRoles)) {
-                console.log(username + ' Baillonne on retire les clés');
-                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
-            } else if (!hasRoleId(STAFF, newRoles) && isSub && hasRoleId(CLEFCACHOT, newRoles)){
-                console.log(username + ' sub qui triche on retir les cles');
-                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
+                } else if (hasRoleId(CLEFCACHOT, newRoles) &&
+                    hasRoleId(PROSONNIER, newRoles) &&
+                    !hasRoleId(MAITRESSE, newRoles)) {
+                    console.log(username + ' Prisonnier on retire les clés');
+                    newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
+                } else if (hasRoleId(CLEFCACHOT, newRoles) &&
+                    hasRoleId(BAILLON, newRoles) &&
+                    !hasRoleId(MAITRESSE, newRoles)) {
+                    console.log(username + ' Baillonne on retire les clés');
+                    newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
+                } else if (!hasRoleId(STAFF, newRoles) && isSub && hasRoleId(CLEFCACHOT, newRoles)){
+                    console.log(username + ' sub qui triche on retir les cles');
+                    newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT)).catch(console.error);
+                }
             }
         }
     },
