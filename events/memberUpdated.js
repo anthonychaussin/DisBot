@@ -17,7 +17,7 @@ const ELLE = '1014992295357059202';
 
 const STAFF = '1015242521695223958';
 const ADMIN = '1014974762872737892';
-
+const MEMBER = '1014988483711991858';
 
 module.exports = {
     name: Events.GuildMemberUpdate,
@@ -33,10 +33,16 @@ module.exports = {
             console.log(username + ' updated');
             const isSub = !(hasRoleId(MAITRESSE, newRoles) || hasRoleId(SWITCH, newRoles) || hasRoleId(SWITCHDOM, newRoles)|| hasRoleId(SWITCHSUB, newRoles));
             if(newMember.user.id == '744505000226717716' && hasRoleId(PROSONNIER, newRoles)){
-                newMember.roles.remove(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMIN)).catch(console.error);
+                setTimeout(() => {
+                    newMember.roles.remove(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMIN)).catch(console.error);
+                    console.log(username + ' on retire les roles de la lapine');
+                }, 1000);
             }
             else if(newMember.user.id == '744505000226717716' && !hasRoleId(PROSONNIER, newRoles)) {
-                newMember.roles.add(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMIN )).catch(console.error);
+                setTimeout(() => {
+                newMember.roles.add(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMIN || r.id === MEMBER)).catch(console.error);
+                    console.log(username + ' on remet les roles de la lapine');
+                }, 1000);
             }
             else{
                 if (!hasRoleId(CLEFCACHOT, newRoles) &&
