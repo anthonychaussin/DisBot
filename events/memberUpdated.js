@@ -33,10 +33,10 @@ module.exports = {
             console.log(username + ' updated');
             const isSub = !(hasRoleId(MAITRESSE, newRoles) || hasRoleId(SWITCH, newRoles) || hasRoleId(SWITCHDOM, newRoles)|| hasRoleId(SWITCHSUB, newRoles));
             if(newMember.user.id == '744505000226717716' && hasRoleId(PROSONNIER, newRoles)){
-                newMember.roles.remove(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMOIN)).catch(console.error);
+                newMember.roles.remove(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMOIN)).catch(console.error);
             }
             else if(newMember.user.id == '744505000226717716' && !hasRoleId(PROSONNIER, newRoles)) {
-                newMember.roles.add(newMember.guild.roles.cache.find(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMOIN)).catch(console.error);
+                newMember.roles.add(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMOIN)).catch(console.error);
             }
             else{
                 if (!hasRoleId(CLEFCACHOT, newRoles) &&
