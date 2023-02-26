@@ -36,7 +36,7 @@ module.exports = {
                 newMember.roles.remove(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMIN)).catch(console.error);
             }
             else if(newMember.user.id == '744505000226717716' && !hasRoleId(PROSONNIER, newRoles)) {
-                newMember.roles.add(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMIN || r.id === '1014988483711991858')).catch(console.error);
+                newMember.roles.add(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMIN )).catch(console.error);
             }
             else{
                 if (!hasRoleId(CLEFCACHOT, newRoles) &&
