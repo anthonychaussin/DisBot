@@ -18,7 +18,7 @@ const ELLE = '1014992295357059202';
 const STAFF = '1015242521695223958';
 const ADMIN = '1014974762872737892';
 const MEMBER = '1014988483711991858';
-
+const MODO = '1014988063140757544';
 module.exports = {
     name: Events.GuildMemberUpdate,
     once: false,
@@ -42,6 +42,18 @@ module.exports = {
                 setTimeout(() => {
                 newMember.roles.add(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === ADMIN || r.id === MEMBER)).catch(console.error);
                     console.log(username + ' on remet les roles de la lapine');
+                }, 1000);
+            }
+            else if(newMember.user.id == '763785611307253820' && (hasRoleId(PROSONNIER, newRoles) || hasRoleId(BAILLON, newRoles))){
+                setTimeout(() => {
+                    newMember.roles.remove(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === MODO)).catch(console.error);
+                    console.log(username + ' on retire les roles de capy');
+                }, 1000);
+            }
+            else if(newMember.user.id == '763785611307253820' && !hasRoleId(PROSONNIER, newRoles) && !hasRoleId(BAILLON, newRoles)) {
+                setTimeout(() => {
+                    newMember.roles.add(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === MEMBER || r.id === MODO)).catch(console.error);
+                    console.log(username + ' on remet les roles au capy');
                 }, 1000);
             }
             else{
