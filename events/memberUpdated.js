@@ -44,7 +44,7 @@ module.exports = {
                     console.log(username + ' on remet les roles de la lapine');
                 }, 1000);
             }
-            else if(newMember.user.id == '763785611307253820' && (hasRoleId(PROSONNIER, newRoles) || hasRoleId(BAILLON, newRoles))){
+            /*else if(newMember.user.id == '763785611307253820' && (hasRoleId(PROSONNIER, newRoles) || hasRoleId(BAILLON, newRoles))){
                 setTimeout(() => {
                     newMember.roles.remove(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === MODO)).catch(console.error);
                     console.log(username + ' on retire les roles de capy');
@@ -55,7 +55,7 @@ module.exports = {
                     newMember.roles.add(newMember.guild.roles.cache.filter(r => r.id === CLEFCACHOT || r.id === STAFF || r.id === MEMBER || r.id === MODO)).catch(console.error);
                     console.log(username + ' on remet les roles au capy');
                 }, 1000);
-            }
+            }*/
             else{
                 if (!hasRoleId(CLEFCACHOT, newRoles) &&
                     hasRoleId(ACCESCACHOT, newRoles) &&
