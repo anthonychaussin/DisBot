@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/anthonychaussin/DisBot#readme",
   "dependencies": {
-    "discord.js": "^14.7.1",
+    "discord.js": "^14.8.0",
     "dotenv": "^16.0.3",
     "keyv": "^4.5.2",
     "node-cron": "^3.0.2",
